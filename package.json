@@ -89,12 +89,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "echo 'Running Build script'",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "prettier --check .",
     "format": "prettier --write .",
-    "rtl": "webpack --config=rtl.config.js"
+    "rtl": "webpack --config=rtl.config.js",
+    "build": "react-scripts build"
   },
   "eslintConfig": {
     "extends": [
