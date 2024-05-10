@@ -80,7 +80,7 @@ const handleClickOpen = (matchId) => {
   const [selectedMatchId, setSelectedMatchId] = useState(null);
 
   const handleAddDetail = async () => {
-    const apiUrl = 'http://localhost:3001/user/registerAgent';
+    const apiUrl = `${apiUrl}/user/registerAgent`;
 
     try {
       const response = await axios.post(apiUrl, {

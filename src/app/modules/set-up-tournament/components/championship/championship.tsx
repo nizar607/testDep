@@ -19,6 +19,7 @@ const Championship = () => {
     const { id } = useParams();
     const [teams, setTeams] = useState<any>([]);
     const { auth } = useAuth();
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     interface Team {
         _id: string;
@@ -99,7 +100,7 @@ const Championship = () => {
 
 
     const handleAddDetail = async () => {
-        const apiUrl = 'http://localhost:3001/user/registerAgent';
+        const apiUrl = `${apiUrl}/user/registerAgent`;
         try {
             const response = await axios.post(apiUrl, {
                 email: formDetails.email,
@@ -137,11 +138,11 @@ const Championship = () => {
             })
         ).required(`Matches are required`),
     });
-    
+
     const navigate = useNavigate();
     const handleSubmit = async (values) => {
         const toastId = toast("Waiting...", { autoClose: false });
-    
+
         console.log('Form values:', values);
         try {
             const response = await axios.post(`${process.env.REACT_APP_API_URL}/match/add-matches/${id}`, values.matches, {

@@ -21,11 +21,12 @@ const TablesWidgetContact: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [contactsPerPage] = useState(5);
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         const fetchContacts = async () => {
             try {
-                const response = await axios.get('http://localhost:3001/contact/contacts');
+                const response = await axios.get(`${apiUrl}/contact/contacts`);
                 setContacts(response.data);
                 console.log(response.data);
             } catch (error) {
@@ -44,7 +45,7 @@ const TablesWidgetContact: React.FC = () => {
         const filteredContacts = contacts.filter
             (contact => contact._id !== id);
         setContacts(filteredContacts);
-        await axios.delete(`http://localhost:3001/contact/contacts/${id}`);
+        await axios.delete(`${apiUrl}/contact/contacts/${id}`);
     }
 
 

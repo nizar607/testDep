@@ -14,11 +14,11 @@ const SingleMatchBracket = () => {
   const [matches, setMatches] = useState([]);
   const [socket, setSocket] = useState<any>(null);
   const [match, setMatch] = useState<any>({});
-
+  const apiUrl = process.env.REACT_APP_API_URL;
 
 
   useEffect(() => {
-  const socketInstance: any = io('http://localhost:3002');
+    const socketInstance: any = io(`${apiUrl}`);
     setSocket(socketInstance);
 
 
@@ -119,14 +119,14 @@ const SingleMatchBracket = () => {
 
   return (
     <>
-      
-    <div  >
-      
 
-      <TournamentBracket matches={matches} />
-     
+      <div  >
 
-    </div>
+
+        <TournamentBracket matches={matches} />
+
+
+      </div>
     </>
   );
 };

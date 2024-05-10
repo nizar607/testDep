@@ -5,11 +5,12 @@ import {StepProps} from '../IAppModels'
 
 const Step1 = ({data, updateData, hasError}: StepProps) => {
   
+  const apiUrl = process.env.REACT_APP_API_URL;
   const [imagePreviewUrl, setImagePreviewUrl] = useState('');
 
   useEffect(() => {
    
-    setImagePreviewUrl(data.appBasic.tournamentLogoPreview || `http://localhost:3001/${data.appBasic.tournamentLogo}`);
+    setImagePreviewUrl(data.appBasic.tournamentLogoPreview || `${apiUrl}/${data.appBasic.tournamentLogo}`);
   }, [data.appBasic.tournamentLogoPreview, data.appBasic.tournamentLogo]); 
   
   

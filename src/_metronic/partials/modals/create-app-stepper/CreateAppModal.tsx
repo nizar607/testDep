@@ -21,6 +21,8 @@ type Props = {
 const modalsRoot = document.getElementById('root-modals') || document.body
 
 const CreateAppModal = ({show, handleClose, tournamentId,refreshTournaments,onSuccessfulUpdate}: Props) => {
+
+  const apiUrl = process.env.REACT_APP_API_URL;
   const stepperRef = useRef<HTMLDivElement | null>(null)
   const stepper = useRef<StepperComponent | null>(null)
   const [data, setData] = useState<ICreateAppData>(defaultCreateAppData)
@@ -57,7 +59,7 @@ const CreateAppModal = ({show, handleClose, tournamentId,refreshTournaments,onSu
     {
         try {
           
-          const response = await axios.get(`http://localhost:3001/tournament/tournament/${tournamentId}`);
+          const response = await axios.get(`${apiUrl}/tournament/tournament/${tournamentId}`);
           if (response.status === 200) {
             console.log(tournamentId);
             const { tournament } = response.data;
@@ -118,7 +120,7 @@ const CreateAppModal = ({show, handleClose, tournamentId,refreshTournaments,onSu
       formData.append('tournamentLevel', data.appBasic.tournamentLevel);
       // Note: You don't need to append tournamentLogoPreview as it's just for client-side preview
 
-      const response = await axios.put(`http://localhost:3001/tournament/tournament/${tournamentId}`, formData, {
+      const response = await axios.put(`${apiUrl}/tournament/tournament/${tournamentId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

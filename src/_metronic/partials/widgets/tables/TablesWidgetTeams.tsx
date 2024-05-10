@@ -23,12 +23,13 @@ const TablesWidgetTeams: React.FC = () => {
   const teamsPerPage = 5;
   const [searchText, setSearchText] = useState('');
   const [sortModel, setSortModel] = useState({ field: '', sort: '' });
+  const apiUrl = process.env.REACT_APP_API_URL;
 
 
 
   const handlePlayers = async (team: Team, teamId: string) => {
     try {
-      const response = await axios.get(`http://localhost:3001/division/get-division-byTeamId/${teamId}`);
+      const response = await axios.get(`${apiUrl}/division/get-division-byTeamId/${teamId}`);
       console.log(response.data);
       navigate('/team', { state: { teams: [team], PlayerPerTeam: response.data.PlayerPerTeam } });
     }
@@ -40,7 +41,7 @@ const TablesWidgetTeams: React.FC = () => {
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/team/allteams');
+        const response = await axios.get(`${apiUrl}/team/allteams`);
         setTeams(response.data);
       } catch (error) {
         console.error('Error fetching teams:', error);
@@ -118,7 +119,7 @@ const TablesWidgetTeams: React.FC = () => {
               {displayedTeams.map((team) => (
                 <tr key={team._id}>
                   <td className='text-center'>
-                    <img src={`http://localhost:3001/${team.logo}`} alt={`${team.name} logo`} style={{ width: '50px', height: '50px' }} />
+                    <img src={`${apiUrl}/${team.logo}`} alt={`${team.name} logo`} style={{ width: '50px', height: '50px' }} />
                   </td>
                   <td>
                     <span className='text-dark fw-bold text-hover-primary mb-1 fs-6'>

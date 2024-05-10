@@ -74,7 +74,7 @@ const ChampionshipMatches = () => {
   };
 
   const handleAddDetail = async () => {
-    const apiUrl = 'http://localhost:3001/user/registerAgent';
+    const apiUrl = `${apiUrl}/user/registerAgent`;
 
     try {
       const response = await axios.post(apiUrl, {
@@ -107,7 +107,7 @@ const ChampionshipMatches = () => {
             {/* Render match details */}
             <div className="row align-items-center">
               <div className="col text-center">
-                <img src={`http://localhost:3001/${match.team1.logo}`} alt={match.team1.name} style={{ width: '100px', height: '100px' }} />
+                <img src={`${apiUrl}/${match.team1.logo}`} alt={match.team1.name} style={{ width: '100px', height: '100px' }} />
                 <div className="mt-2"><strong>{match.team1.name}</strong></div>
               </div>
               <div className="col text-center">
@@ -116,7 +116,7 @@ const ChampionshipMatches = () => {
                 <p className="card-text">{new Date(match.time).toLocaleString()}</p>
               </div>
               <div className="col text-center">
-                <img src={`http://localhost:3001/${match.team2.logo}`} alt={match.team2.name} style={{ width: '100px', height: '100px' }} />
+                <img src={`${apiUrl}/${match.team2.logo}`} alt={match.team2.name} style={{ width: '100px', height: '100px' }} />
                 <div className="mt-2"><strong>{match.team2.name}</strong></div>
               </div>
             </div>

@@ -10,13 +10,14 @@ function ChampionshipStatus() {
     const { divisionId } = useParams<{ divisionId: string }>();
     const [teams, setTeams] = useState<any>();
     const [firstPlace, setFirstPlace] = useState<any>();
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     const fetchFisrtPlace = async () => {
         console.log('divisionId ', divisionId)
         console.log('resulty ');
         const result = await verifyDivisionChampion(divisionId as any);
         console.log('result ', result);
-        const firstTeamSelected = await axios.get("http://localhost:3001/team/get-team/" + result.data);
+        const firstTeamSelected = await axios.get(`${apiUrl}/team/get-team/` + result.data);
         setFirstPlace(firstTeamSelected.data.team);
     }
     useEffect(() => {

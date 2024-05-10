@@ -9,7 +9,7 @@ type Props = {
 };
 
 const CardsWidget20 = ({ className, description, color, img }: Props) => {
-  
+  const apiUrl = process.env.REACT_APP_API_URL;
   const [tournamentCount, setTournamentCount] = useState<number | null>(null);
   const safeTournamentCount = tournamentCount ?? 0;
 
@@ -17,7 +17,7 @@ const CardsWidget20 = ({ className, description, color, img }: Props) => {
 
     const fetchTournamentsCount = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/tournament/tournaments/count');
+        const response = await axios.get(`${apiUrl}/tournament/tournaments/count`);
        
         setTournamentCount(response.data.count);
       } catch (error) {

@@ -10,7 +10,7 @@ interface TournamentBracketProps {
 
 const TournamentBracket: React.FC<TournamentBracketProps> = ({ matches }) => {
   const [team, setTeam] = useState<{ name: string  , logo : string , location : string} | null>(null);
-  const apiUrl = 'http://localhost:3001';
+  const apiUrl = process.env.REACT_APP_API_URL;
   console.log('matches', matches);
   
 
@@ -19,7 +19,7 @@ const TournamentBracket: React.FC<TournamentBracketProps> = ({ matches }) => {
         const lastMatch = matches[matches.length - 1];
         if (lastMatch && lastMatch.winner) {
             try {
-                const response = await axios.get(`http://localhost:3001/team/team/${lastMatch.winner}`);
+                const response = await axios.get(`${apiUrl}/team/team/${lastMatch.winner}`);
                 console.log('response team winner', response.data);
                 setTeam(response.data.team);
             } catch (error) {

@@ -16,10 +16,11 @@ const UploadFile: FunctionComponent<IUploadFile> = ({
     setFieldValue,
     errors
 }) => {
+    const apiUrl = process.env.REACT_APP_API_URL;
     const filename = "1708531558911-Artimenner1.png";
     return (
         <div>
-            <img src={`http://localhost:3000/uploads/${filename}`} alt="Avatar not found" />
+            <img src={`${apiUrl}/uploads/${filename}`} alt="Avatar not found" />
             <input
                 type="file"
                 name="image"

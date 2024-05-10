@@ -13,6 +13,7 @@ import { time } from 'console';
 
 const MatchComponent = ({ match }) => {
 
+    const apiUrl = process.env.REACT_APP_API_URL;
     const [selectedMatchId, setSelectedMatchId] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
     const [open, setOpen] = useState(false);
@@ -55,7 +56,7 @@ const MatchComponent = ({ match }) => {
         setOpenTime(false);
     };  
 
-    /*   const apiUrl = 'http://localhost:3001/match/addTime';
+    /*   
 
         try {
             const response = await axios.put(`${apiUrl}/${matchId}`, {
@@ -72,10 +73,9 @@ const MatchComponent = ({ match }) => {
         } */
 
         const handleAddTime = async (matchId, time) => {
-            const apiUrl = 'http://localhost:3001/match/addTime';
         
             try {
-                const response = await axios.put(`${apiUrl}/${matchId}`, {time: time} ,{
+                const response = await axios.put(`${apiUrl}/match/addTime/${matchId}`, {time: time} ,{
                     headers: {
                         Authorization: `Bearer ${auth?.api_token}`,
                     }
@@ -93,10 +93,9 @@ const MatchComponent = ({ match }) => {
 
 
     const handleAddDetail = async () => {
-        const apiUrl = 'http://localhost:3001/user/registerAgent';
 
         try {
-            const response = await axios.post(apiUrl, {
+            const response = await axios.post(`${apiUrl}/user/registerAgent`, {
                 email: formDetails.email,
                 password: formDetails.password,
                 matchId: selectedMatchId, // Include the selected match ID

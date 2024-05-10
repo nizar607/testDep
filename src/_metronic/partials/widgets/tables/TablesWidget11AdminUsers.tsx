@@ -22,6 +22,7 @@ const TablesWidget11AdminUsers: React.FC<Props> = ({ Users }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 5;
   const [searchText, setSearchText] = useState('');
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     setNewUsers([...Users]);
@@ -29,7 +30,7 @@ const TablesWidget11AdminUsers: React.FC<Props> = ({ Users }) => {
 
   const banUser = async (userId: string) => {
     try {
-      await axios.put(`http://localhost:3001/user/ban/${userId}`);
+      await axios.put(`${apiUrl}/user/ban/${userId}`);
       setNewUsers(newUsers.map(user => user._id === userId ? { ...user, status: 'banned' } : user));
       alert('User banned successfully');
     } catch (error) {
@@ -39,7 +40,7 @@ const TablesWidget11AdminUsers: React.FC<Props> = ({ Users }) => {
 
   const unbanUser = async (userId: string) => {
     try {
-      await axios.put(`http://localhost:3001/user/activate/${userId}`);
+      await axios.put(`${apiUrl}/user/activate/${userId}`);
       setNewUsers(newUsers.map(user => user._id === userId ? { ...user, status: 'active' } : user));
       alert('User unbanned successfully');
     } catch (error) {

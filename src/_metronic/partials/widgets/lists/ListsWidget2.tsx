@@ -19,11 +19,11 @@ type Props = {
 
 const ListsWidget2: React.FC<Props> = ({ className }) => {
   const [events, setEvents] = useState<Event[]>([]);
-
+  const apiUrl = process.env.REACT_APP_API_URL;
   useEffect(() => {
     const fetchMatches = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/user/agent/match');
+        const response = await axios.get(`${apiUrl}/user/agent/match`);
         const matches = response.data;
 
         // Adapt each match to the format expected by react-big-calendar

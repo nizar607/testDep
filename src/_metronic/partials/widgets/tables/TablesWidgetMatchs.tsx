@@ -22,11 +22,12 @@ const TablesWidgetMatchs: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const matchesPerPage = 5; // Nombre de matchs par page
   const { auth } = useAuth();
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchMatches = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/match/matches');
+        const response = await axios.get(`${apiUrl}/match/matches`);
         setMatches(response.data);
       } catch (error) {
         console.error('Error fetching matches:', error);
@@ -64,10 +65,10 @@ const TablesWidgetMatchs: React.FC = () => {
   const [selectedMatchId, setSelectedMatchId] = useState(null);
 
   const handleAddDetail = async () => {
-    const apiUrl = 'http://localhost:3001/user/registerAgent';
+   
 
     try {
-      const response = await axios.post(apiUrl, {
+      const response = await axios.post(`${apiUrl}/user/registerAgent`, {
         email: formDetails.email,
         password: formDetails.password,
         matchId: selectedMatchId, // Include the selected match ID
@@ -102,7 +103,7 @@ const TablesWidgetMatchs: React.FC = () => {
           <div className="card-body">
             <div className="row align-items-center">
               <div className="col text-center">
-                <img src={`http://localhost:3001/${match.team1Logo}`} alt={match.team1Name} style={{ width: '100px', height: '100px' }} />
+                <img src={`${apiUrl}/${match.team1Logo}`} alt={match.team1Name} style={{ width: '100px', height: '100px' }} />
                 <div className="mt-2"><strong>{match.team1Name}</strong></div>
               </div>
               <div className="col text-center">
@@ -111,7 +112,7 @@ const TablesWidgetMatchs: React.FC = () => {
                 <p className="card-text">{new Date(match.time).toLocaleString()}</p>
               </div>
               <div className="col text-center">
-                <img src={`http://localhost:3001/${match.team2Logo}`} alt={match.team2Name} style={{ width: '100px', height: '100px' }} />
+                <img src={`${apiUrl}/${match.team2Logo}`} alt={match.team2Name} style={{ width: '100px', height: '100px' }} />
                 <div className="mt-2"><strong>{match.team2Name}</strong></div>
               </div>
             </div>

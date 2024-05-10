@@ -17,7 +17,7 @@ function AgentPage() {
     const [teams, setTeams] = useState<any>([]);
     const [selectedPlayer, setSelectedPlayer] = useState<any>();
     const [teamIndex, setTeamIndex] = useState(0);
-
+    const apiUrl = process.env.REACT_APP_API_URL;
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = (player) => {
@@ -93,7 +93,7 @@ function AgentPage() {
 
 
 
-        const socketInstance: any = io('http://localhost:3002');
+        const socketInstance: any = io(apiUrl);
         setSocket(socketInstance);
 
 

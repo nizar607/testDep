@@ -59,7 +59,7 @@ export function registergoogle(
 
 
 export function requestPassword(email: string) {
-  return axios.post('http://localhost:3001/user/forgot-password', { email });
+  return axios.post(`${API_URL}/user/forgot-password`, { email });
   
 }
 

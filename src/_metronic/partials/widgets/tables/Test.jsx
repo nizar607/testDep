@@ -22,7 +22,7 @@ import { updateTeam } from "../../../../services/TeamService";
 function AgentPage() {
 
   const [match, setMatch] = useState < any > ({});
-  const [hasNoRedCard, setHasNoRedCard] = useState<any>(true);
+  const [hasNoRedCard, setHasNoRedCard] = useState < any > (true);
   const [isStarted, setIsStarted] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
   const [isOpenSubstitute, setIsOpenSubstitute] = useState(false);
@@ -36,6 +36,7 @@ function AgentPage() {
   const [socket, setSocket] = useState < any > (null);
   const { currentUser } = useAuth();
   const { auth } = useAuth();
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleClickOpen = (player) => {
     setSelectedPlayer(player);
@@ -50,61 +51,11 @@ function AgentPage() {
     console.log("selectedPlayer ", selectedPlayer);
     console.log("substitute ", substitute);
 
-    // const teamsCopy = [...teams];
-    // let fromPlayerToSubstitute;
-
-    // teamsCopy[teamIndex].players = teamsCopy[teamIndex].players.map((player) => {
-    //   if (player._id === selectedPlayer._id) {
-    //     fromPlayerToSubstitute = player;
-    //     substitute.position = player.position;
-    //     return substitute;
-    //   }
-    //   return player;
-    // });
-
-    // teamsCopy[teamIndex].subtitutes = teamsCopy[teamIndex].subtitutes.map((player) => {
-    //   if (player._id === substitute._id) {
-    //     console.log("found");
-    //     return fromPlayerToSubstitute;
-    //   }
-    //   return player;
-    // });
-
-
-    // if (selectedPlayer) {
-    //   const response = await updateMatchScore(match._id, selectedPlayer._id);
-    //   emitMatch();
-    //   console.log("response ", match);
-    // }
-
-
-    // console.log("teamsCopy ", teamsCopy);
-    // setTeams(teamsCopy);
-    // patchPlayer(substitute._id, { position: substitute.position });
-    // patchPlayer(fromPlayerToSubstitute._id, { position: fromPlayerToSubstitute.position });
-    // console.log("teamsCopy[teamIndex] ", teamsCopy[teamIndex])
-
-    // const updatedTeams = updateTeam(teamsCopy[teamIndex]._id, {
-    //   players: teamsCopy[teamIndex]
-    //     .players.map(player => { if (typeof player._id == 'string') return player._id }),
-    //   subtitutes: teamsCopy[teamIndex]
-    //     .subtitutes.map(subtitute => { if (typeof subtitute._id == 'string') return subtitute._id })
-    // });
-
-    // console.log("teams before change ", teams[teamIndex]);
-    // console.log("teams after change ",
-    //   {
-    //     players: teamsCopy[teamIndex]
-    //       .players.map(player => player),
-    //     substitutes: teamsCopy[teamIndex]
-    //       .subtitutes.map(subtitute => subtitute)
-    //   });
-
     setIsOpenSubstitute(false);
   };
 
 
-  const handleSubstitution = async (substitute: any) => {
+  const handleSubstitution = async (substitute) => {
 
     console.log("performing subtitution");
     console.log("selected player ", selectedPlayer);
@@ -137,7 +88,7 @@ function AgentPage() {
 
     // setMatch(matchFromParent);
     try {
-      const response = await axios.get('http://localhost:3001/user/agent/match', {
+      const response = await axios.get(`${apiUrl}/user/agent/match`, {
         headers: {
           Authorization: `Bearer ${auth?.api_token}`,
         },
@@ -169,7 +120,7 @@ function AgentPage() {
   const handleDeleteMatch = async () => {
     if (match) {
       try {
-        const response = await axios.put(`http://localhost:3001/user/agent/deletematch`, {
+        const response = await axios.put(`${apiUrl}/user/agent/deletematch`, {
           headers: {
             Authorization: `Bearer ${auth?.api_token}`,
           },
@@ -195,7 +146,7 @@ function AgentPage() {
 
 
 
-    const socketInstance: any = io('http://localhost:3002');
+    const socketInstance = io(apiUrl);
     setSocket(socketInstance);
 
 
@@ -220,7 +171,7 @@ function AgentPage() {
     console.log("response", match);
 
 
-    const data: any = [];
+    const data = [];
     for (let i = 1, j = 0; i < 27; i++, j++) {
 
       data.push({

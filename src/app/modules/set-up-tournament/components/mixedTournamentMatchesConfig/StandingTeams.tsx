@@ -15,9 +15,9 @@ import { useState } from 'react';
 export default function StadingTeams({ teams }) {
 
     const [teamsPoints, setTeamsPoints] = useState<any>([])
-
+    const apiUrl = process.env.REACT_APP_API_URL;
     const fetchTeamsPoints = async () => {
-        const response = await axios.post('http://localhost:3001/teamPoints/get-points-teams', { teamsIds: teams });
+        const response = await axios.post(`${apiUrl}/teamPoints/get-points-teams`, { teamsIds: teams });
         const fetchedData = response.data.sort((a, b) => b.points.reduce((a, b) => a + b, 0) - a.points.reduce((a, b) => a + b, 0));
         setTeamsPoints(fetchedData);
     }

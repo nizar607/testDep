@@ -1,12 +1,12 @@
-import {useEffect, useRef, useState} from 'react'
-import {KTIcon} from '../../../../_metronic/helpers'
-import {Step1} from './steps/Step1'
-import {Step2} from './steps/Step2'
-import {Step3} from './steps/Step3'
-import {Step5} from './steps/Step5'
-import {StepperComponent} from '../../../../_metronic/assets/ts/components'
-import {Form, Formik, FormikValues} from 'formik'
-import {createAccountSchemas, ICreateAccount, inits} from './CreateAccountWizardHelper'
+import { useEffect, useRef, useState } from 'react'
+import { KTIcon } from '../../../../_metronic/helpers'
+import { Step1 } from './steps/Step1'
+import { Step2 } from './steps/Step2'
+import { Step3 } from './steps/Step3'
+import { Step5 } from './steps/Step5'
+import { StepperComponent } from '../../../../_metronic/assets/ts/components'
+import { Form, Formik, FormikValues } from 'formik'
+import { createAccountSchemas, ICreateAccount, inits } from './CreateAccountWizardHelper'
 import axios from 'axios'
 import { useAuth } from '../../../../app/modules/auth';
 import { useNavigate } from 'react-router-dom';
@@ -22,12 +22,12 @@ const Vertical = () => {
   const [currentSchema, setCurrentSchema] = useState(createAccountSchemas[0])
   const [initValues] = useState<ICreateAccount>(inits)
   const navigate = useNavigate();
+  const apiUrl = process.env.REACT_APP_API_URL;
 
 
- 
 
 
-  const {auth} = useAuth();
+  const { auth } = useAuth();
   const { currentUser } = useAuth();
   console.log('auth', auth);
 
@@ -51,7 +51,7 @@ const Vertical = () => {
     if (!stepper.current) {
       return;
     }
-  
+
     if (stepper.current.currentStepIndex !== stepper.current.totalStepsNumber) {
       stepper.current.goNext();
     } else {
@@ -64,29 +64,29 @@ const Vertical = () => {
           formData.append(key, values[key]);
         }
         // Extract the user's ID from the token
-       
-       const token = auth?.api_token;
-       console.log("hhhh"+token) // Replace with your actual token
-       const payload = JSON.parse(atob(token?.split('.')[1] ?? ''));
-       const userId = payload.userId;
 
-      // Append the user's ID to formData
-      formData.append('createdBy', userId);
-  
+        const token = auth?.api_token;
+        console.log("hhhh" + token) // Replace with your actual token
+        const payload = JSON.parse(atob(token?.split('.')[1] ?? ''));
+        const userId = payload.userId;
+
+        // Append the user's ID to formData
+        formData.append('createdBy', userId);
+
         // Send a POST request to the server with the tournament data
-        const response = await axios.post('http://localhost:3001/tournament/add', formData);
+        const response = await axios.post(`${apiUrl}/tournament/add`, formData);
         console.log('Response:', response.data);
-         // Redirect to the desired route
-      navigate('/setuptournament/mytournaments');
+        // Redirect to the desired route
+        navigate('/setuptournament/mytournaments');
       } catch (error) {
         console.error('Error saving tournament:', error);
       }
-  
+
       stepper.current.goto(1);
       console.log('Submit Values:', values);
       actions.resetForm();
     }
-  
+
     setCurrentSchema(createAccountSchemas[stepper.current.currentStepIndex - 1]);
   };
 
@@ -104,7 +104,7 @@ const Vertical = () => {
       className='stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid'
       id='kt_create_account_stepper'
     >
-     
+
       {/* begin::Aside*/}
       <div className='card d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px w-xxl-400px me-9'>
         {/* begin::Wrapper*/}
@@ -190,7 +190,7 @@ const Vertical = () => {
             </div>
             {/* end::Step 3*/}
 
-           
+
 
             {/* begin::Step 4*/}
             <div className='stepper-item' data-kt-stepper-element='nav'>
@@ -274,4 +274,4 @@ const Vertical = () => {
   )
 }
 
-export {Vertical}
+export { Vertical }

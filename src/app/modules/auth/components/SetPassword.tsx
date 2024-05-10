@@ -20,13 +20,14 @@ export function SetPassword() {
   const { email } = useParams<{ email: string }>();
   const [loading, setLoading] = useState(false)
   const [hasErrors, setHasErrors] = useState<boolean | undefined>(undefined)
+  const apiUrl = process.env.REACT_APP_API_URL
   const formik = useFormik({
     initialValues,
     validationSchema: setPasswordSchema,
     onSubmit: (values, {setStatus, setSubmitting}) => {
       setLoading(true);
       setHasErrors(undefined);
-      axios.put(`http://localhost:3001/user/change-password/${email}`, { newPassword: values.newPassword })
+      axios.put(`${apiUrl}/user/change-password/${email}`, { newPassword: values.newPassword })
         .then(({data}) => {
           setHasErrors(false);
           setLoading(false);

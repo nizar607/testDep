@@ -42,6 +42,7 @@ export function Login() {
   const [loading, setLoading] = useState(false);
   const { saveAuth, setCurrentUser } = useAuth();
   const navigate = useNavigate();
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const formik = useFormik({
     initialValues,
@@ -77,7 +78,7 @@ export function Login() {
   const onSuccess = async (response) => {
     console.log('Google login successful', response);
     try {
-      const { data } = await axios.post('http://localhost:3001/user/google-login', {
+      const { data } = await axios.post(`${apiUrl}/user/google-login`, {
         code: response.code, 
       });
       console.log('Google login data:', data.token);

@@ -180,33 +180,7 @@ function AddPlayerModal({ showAddPlayer, handleCloseModal }) {
 
 
 
-    // const formik = useFormik<IProfileDetails>({
-    //     initialValues,
 
-    //     onSubmit: async (values) => {
-    //         setLoading(true)
-    //         setTimeout(async () => {
-    //             const updatedData = Object.assign(data, values)
-    //             console.log(data);
-    //             setData(updatedData)
-    //             setLoading(false)
-    //             alert(JSON.stringify(values, null, 2));
-    //             try {
-    //                 const formData = new FormData();
-    //                 for (const key in values) {
-    //                     formData.append(key, values[key]);
-    //                 }
-
-    //                 // Send a POST request to the server with the tournament data
-    //                 const response = await axios.post('http://localhost:3001/player/add', formData);
-    //                 console.log('Response:', response.data);
-
-    //             } catch (error) {
-    //                 console.error('Error saving tournament:', error);
-    //             }
-    //         }, 1000)
-    //     },
-    // })
     const [loading, setLoading] = useState(false)
 
 
@@ -223,7 +197,7 @@ function AddPlayerModal({ showAddPlayer, handleCloseModal }) {
             <Modal.Body>
 
                 <div className='card mb-5 mb-xl-10'>
-                       
+
                     <div id='kt_account_profile_details' className='collapse show'>
                         <form onSubmit={formik.handleSubmit} className='form'>
                             <div className='card-body border-top p-9'>

@@ -30,14 +30,15 @@ type Props = {
 
 const TablesWidget11: React.FC<Props> = ({ tournaments, refreshTournaments }) => {
 
-
-  useEffect(() => {
-
-    setNewTournaments([].concat(...Object.values(tournaments) as any));
-
-  }, [tournaments]);
-
   const [newTournaments, setNewTournaments] = useState([].concat(...Object.values(tournaments)));
+  const apiUrl = process.env.REACT_APP_API_URL;
+  
+    useEffect(() => {
+
+      setNewTournaments([].concat(...Object.values(tournaments) as any));
+
+    }, [tournaments]);
+
 
 
 
@@ -100,7 +101,7 @@ const TablesWidget11: React.FC<Props> = ({ tournaments, refreshTournaments }) =>
 
   const handleSubmitComment = async (comment: string, tournamentId: string) => {
     try {
-      const response = await axios.put(`http://localhost:3001/tournament/addcomment/${tournamentId}`, {
+      const response = await axios.put(`${apiUrl}/tournament/addcomment/${tournamentId}`, {
         comment,
       });
 

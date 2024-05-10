@@ -41,6 +41,7 @@ function AgentPage() {
   const { currentUser } = useAuth();
   const { auth } = useAuth();
 
+  const apiUrl = process.env.REACT_APP_API_URL;
   const handleClickOpen = (player) => {
 
     match.events.map((event) => { console.log(event) });
@@ -91,7 +92,7 @@ function AgentPage() {
 
   const fetchMatch = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/user/agent/match', {
+      const response = await axios.get(`${apiUrl}/user/agent/match`, {
         headers: {
           Authorization: `Bearer ${auth?.api_token}`,
         },
@@ -128,7 +129,7 @@ function AgentPage() {
   const handleDeleteMatch = async () => {
     if (match) {
       try {
-        const response = await axios.put(`http://localhost:3001/user/agent/deletematch`, {
+        const response = await axios.put(`${apiUrl}/user/agent/deletematch`, {
           headers: {
             Authorization: `Bearer ${auth?.api_token}`,
           },
@@ -154,7 +155,7 @@ function AgentPage() {
 
 
 
-    const socketInstance: any = io('http://localhost:3002');
+    const socketInstance: any = io(apiUrl);
     setSocket(socketInstance);
 
 

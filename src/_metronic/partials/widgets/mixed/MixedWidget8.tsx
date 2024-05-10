@@ -20,11 +20,11 @@ const MixedWidget8: React.FC<Props> = ({ className, chartColor, chartHeight }) =
   const chartRef = useRef<HTMLDivElement | null>(null);
   const { mode } = useThemeMode();
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
-
+  const apiUrl = process.env.REACT_APP_API_URL;
   useEffect(() => {
     const fetchTournaments = async () => {
       try {
-        const { data } = await axios.get('http://localhost:3001/tournament/tournamentsAdmin');
+        const { data } = await axios.get(`${apiUrl}/tournament/tournamentsAdmin`);
         const processedTournaments = data
           .map(tournament => ({
             ...tournament,
@@ -103,13 +103,13 @@ const MixedWidget8: React.FC<Props> = ({ className, chartColor, chartHeight }) =
 
       <div className='card-body d-flex flex-column'>
         <div ref={chartRef} className='mixed-widget-8-chart'></div>
-        
+
         {/* Displaying top 3 tournaments */}
         <div className='mt-5'>
           {tournaments.slice(0, 3).map((tournament) => (
             <div key={tournament._id} className='d-flex align-items-center mb-5'>
               <div className='symbol symbol-50px me-5'>
-                <img src={`http://localhost:3001/${tournament.tournamentLogo}`} alt={tournament.tournamentName} style={{ width: '50px' }} />
+                <img src={`${apiUrl}/${tournament.tournamentLogo}`} alt={tournament.tournamentName} style={{ width: '50px' }} />
               </div>
               <div>
                 <a href='#' className='text-dark text-hover-primary fw-bold fs-6'>{tournament.tournamentName}</a>

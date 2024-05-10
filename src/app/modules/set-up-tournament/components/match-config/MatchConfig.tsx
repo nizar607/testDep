@@ -37,6 +37,7 @@ const MatchConfig = () => {
     const [numberTeams, setNumberTeams] = useState<number>(0);
     const [tournament, setTournament] = useState<any>({}); // Assuming you have a tournament object with the required properties
     const navigate = useNavigate();
+    const apiUrl = process.env.REACT_APP_API_URL;
 
 
    
@@ -175,7 +176,7 @@ const MatchConfig = () => {
 
 
     const handleAddDetail = async () => {
-        const apiUrl = 'http://localhost:3001/user/registerAgent';
+        const apiUrl = `${apiUrl}/user/registerAgent`;
 
         try {
             const response = await axios.post(apiUrl, {
