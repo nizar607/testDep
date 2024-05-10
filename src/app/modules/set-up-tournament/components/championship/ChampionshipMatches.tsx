@@ -28,6 +28,7 @@ const ChampionshipMatches = () => {
   const matchesPerPage = 5;
   const { id } = useParams();
   const { auth } = useAuth();
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchMatches = async () => {
@@ -74,10 +75,10 @@ const ChampionshipMatches = () => {
   };
 
   const handleAddDetail = async () => {
-    const apiUrl = `${apiUrl}/user/registerAgent`;
+
 
     try {
-      const response = await axios.post(apiUrl, {
+      const response = await axios.post(`${apiUrl}/user/registerAgent`, {
         email: formDetails.email,
         password: formDetails.password,
         matchId: selectedMatchId, // Include the selected match ID

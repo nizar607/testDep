@@ -93,7 +93,7 @@ function AgentPage() {
 
 
 
-        const socketInstance: any = io(apiUrl);
+        const socketInstance: any = io(`${apiUrl}`);
         setSocket(socketInstance);
 
 

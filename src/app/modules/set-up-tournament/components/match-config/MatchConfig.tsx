@@ -176,10 +176,9 @@ const MatchConfig = () => {
 
 
     const handleAddDetail = async () => {
-        const apiUrl = `${apiUrl}/user/registerAgent`;
 
         try {
-            const response = await axios.post(apiUrl, {
+            const response = await axios.post(`${apiUrl}/user/registerAgent`, {
                 email: formDetails.email,
                 password: formDetails.password,
 

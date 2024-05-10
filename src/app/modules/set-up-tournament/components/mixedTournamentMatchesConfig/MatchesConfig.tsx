@@ -57,53 +57,52 @@ const MatchesConfig = () => {
     const [division, setDivision] = useState<any>(null);
     const [stages, setStages] = useState<any>([]);
     const { auth } = useAuth();
+    const apiUrl = process.env.REACT_APP_API_URL;
+
+    const [open, setOpen] = useState(false);
+    const [formDetails, setFormDetails] = useState({ email: '', password: '' });
 
 
-const [open, setOpen] = useState(false);
-const [formDetails, setFormDetails] = useState({ email: '', password: '' });
 
+    const handleClickOpen = (matchId) => {
+        setSelectedMatchId(matchId);
+        setOpen(true);
+    };
 
+    const handleClose = () => {
+        setOpen(false);
+    };
 
-const handleClickOpen = (matchId) => {
-    setSelectedMatchId(matchId);
-    setOpen(true);
-  };
+    const handleChange = (e) => {
+        setFormDetails({ ...formDetails, [e.target.name]: e.target.value });
+    };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+    const [selectedMatchId, setSelectedMatchId] = useState(null);
 
-  const handleChange = (e) => {
-    setFormDetails({ ...formDetails, [e.target.name]: e.target.value });
-  };
+    const handleAddDetail = async () => {
 
-  const [selectedMatchId, setSelectedMatchId] = useState(null);
+        try {
+            const response = await axios.post(`${apiUrl}/user/registerAgent`, {
+                email: formDetails.email,
+                password: formDetails.password,
+                matchId: selectedMatchId,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${auth?.api_token}`,
+                }
+            });
 
-  const handleAddDetail = async () => {
-    const apiUrl = `${apiUrl}/user/registerAgent`;
-
-    try {
-      const response = await axios.post(apiUrl, {
-        email: formDetails.email,
-        password: formDetails.password,
-        matchId: selectedMatchId, 
-      }, {
-        headers: {
-          Authorization: `Bearer ${auth?.api_token}`,
+            console.log('Agent registered successfully:', response.data);
+            console.log(selectedMatchId);
+            alert('Agent registered successfully');
+            setFormDetails({ email: '', password: '' }); // Reset form
+            setSelectedMatchId(null); // Reset selected match ID
+            setOpen(false); // Close the dialog
+        } catch (error) {
+            console.error('Error registering agent:', error);
+            alert('Error registering agent. Please try again.');
         }
-      });
-
-      console.log('Agent registered successfully:', response.data);
-      console.log(selectedMatchId);
-      alert('Agent registered successfully');
-      setFormDetails({ email: '', password: '' }); // Reset form
-      setSelectedMatchId(null); // Reset selected match ID
-      setOpen(false); // Close the dialog
-    } catch (error) {
-      console.error('Error registering agent:', error);
-      alert('Error registering agent. Please try again.');
-    }
-  };
+    };
 
 
     const handleSubmit = async (values, match) => {
@@ -130,8 +129,8 @@ const handleClickOpen = (matchId) => {
 
     return (
         <>
-        
-        
+
+
 
             <>
                 {stages.length == 1 &&
@@ -173,41 +172,41 @@ const handleClickOpen = (matchId) => {
                                                                                 <h2 className="row text-center" style={{ color: '#6c757d' }}>
 
                                                                                     <div className="col-auto mx-auto">
-                                                                                        VS 
+                                                                                        VS
                                                                                     </div>
 
                                                                                     <div>
 
-              <div style={{ margin: '20px 0' }}>
-                {/* Placeholder for match details */}
-                <Button variant="outlined" onClick={() => handleClickOpen(match._id)}>
-                  Add Agent to Match
-                </Button>
+                                                                                        <div style={{ margin: '20px 0' }}>
+                                                                                            {/* Placeholder for match details */}
+                                                                                            <Button variant="outlined" onClick={() => handleClickOpen(match._id)}>
+                                                                                                Add Agent to Match
+                                                                                            </Button>
 
-              </div>
+                                                                                        </div>
 
 
-              {/* Dialog for adding an agent */}
-              <Dialog
-                open={open}
-                onClose={handleClose}
-                BackdropProps={{
-                  style: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.1)', // Change this to adjust the color and opacity
-                  },
-                }}>
-                <DialogTitle>Add Agent</DialogTitle>
-                <DialogContent>
-                  <TextField autoFocus margin="dense" id="email" label="Email" type="email" name="email" fullWidth variant="outlined" value={formDetails.email} onChange={handleChange} />
-                  <TextField margin="dense" id="password" label="Password" type="password" name="password" fullWidth variant="outlined" value={formDetails.password} onChange={handleChange} />
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={handleClose}>Cancel</Button>
-                  <Button onClick={handleAddDetail}>Add Agent</Button>
-                </DialogActions>
-              </Dialog>
+                                                                                        {/* Dialog for adding an agent */}
+                                                                                        <Dialog
+                                                                                            open={open}
+                                                                                            onClose={handleClose}
+                                                                                            BackdropProps={{
+                                                                                                style: {
+                                                                                                    backgroundColor: 'rgba(0, 0, 0, 0.1)', // Change this to adjust the color and opacity
+                                                                                                },
+                                                                                            }}>
+                                                                                            <DialogTitle>Add Agent</DialogTitle>
+                                                                                            <DialogContent>
+                                                                                                <TextField autoFocus margin="dense" id="email" label="Email" type="email" name="email" fullWidth variant="outlined" value={formDetails.email} onChange={handleChange} />
+                                                                                                <TextField margin="dense" id="password" label="Password" type="password" name="password" fullWidth variant="outlined" value={formDetails.password} onChange={handleChange} />
+                                                                                            </DialogContent>
+                                                                                            <DialogActions>
+                                                                                                <Button onClick={handleClose}>Cancel</Button>
+                                                                                                <Button onClick={handleAddDetail}>Add Agent</Button>
+                                                                                            </DialogActions>
+                                                                                        </Dialog>
 
-            </div>
+                                                                                    </div>
 
                                                                                 </h2>
 
@@ -285,7 +284,7 @@ const handleClickOpen = (matchId) => {
                                         <Link to="/setuptournament/mytournaments" style={{ color: '#fff', textDecoration: 'none' }}>
                                             Confirm Stage <KTIcon iconName='' className='fs-3' />
                                         </Link>
-                                        </Button>
+                                    </Button>
                                 </div >
                             </>
                         )}
@@ -427,8 +426,8 @@ const handleClickOpen = (matchId) => {
                                             {
                                                 group.matches.map((match: any, matchIndex: number) => {
                                                     return (
-                                                    
-                                                      
+
+
                                                         <div key={matchIndex} className="card mt-9 mx-5" style={{ backgroundColor: 'white' }}>
                                                             <div className="card-body" style={{
                                                                 borderRadius: '10px', // Adjust as needed
@@ -522,7 +521,7 @@ const handleClickOpen = (matchId) => {
                     <>
                         {stages[stages.length - 1].groups[0].teams.length == 1 &&
                             <>
-                                    {/* <ParticleBg/> */}
+                                {/* <ParticleBg/> */}
                                 <div className="container-fluid">
 
                                     <div className="row justify-content-center" >
@@ -650,7 +649,7 @@ const handleClickOpen = (matchId) => {
                                                     }
                                                 </AccordionDetails>
                                             </Accordion>
-                                           
+
                                         </div >
                                     </>
                                 )}
